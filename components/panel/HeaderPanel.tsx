@@ -12,7 +12,8 @@ export const HeaderPanel: NextPage = () => {
   function copyToClipboard() {
     const { toast, snackbar } = require('tailwind-toast')
     navigator.clipboard.writeText(url).then(function() {
-        toast().default('Copied!', '').show()
+      alert('copied')
+        // toast().default('Copied!', '').show()
       }, function(err) {
         toast().default('Copied!').show()
       });

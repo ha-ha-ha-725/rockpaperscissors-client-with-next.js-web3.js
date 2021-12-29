@@ -2,7 +2,7 @@
   "name": "web3-nextjs-rockpaperscissors-ts",
   "private": true,
   "scripts": {
-    "start": "(if exist .next rd /s /q .next 2>nul) && next dev"
+    "start": "next dev -p 80"
   },
   "dependencies": {
     "@rematch/core": "^2.2.0",

@@ -145,8 +145,12 @@ const Viewer: NextPage = () => {
                                         </div>
                                     </div>
                                 </> : <div className="text-center mt-30">
-                                    {player1.winning >= player2.winning && <p className='text-3xl'>Player 1 Win</p>}
-                                    {player1.winning < player2.winning && <p className='text-3xl'>Player 2 Win</p>}
+                                    {player1.winning > player2.winning && <p className='mt-20 text-3xl'>{ roundCount == 3 && `${player1.address} won against ${player2.address} in best of three` }</p>}
+                                    {player1.winning > player2.winning && <p className='mt-20 text-3xl'>{ roundCount == 5 && `${player1.address} won against ${player2.address} in best of five` }</p>}
+                                    {player1.winning > player2.winning && <p className='mt-20 text-3xl'>{ roundCount == 10 && `${player1.address} won against ${player2.address} in best of ten` }</p>}
+                                    {player1.winning < player2.winning && <p className='mt-20 text-3xl'>{ roundCount == 3 && `${player2.address} won against ${player1.address} in best of ` }</p>}
+                                    {player1.winning < player2.winning && <p className='mt-20 text-3xl'>{ roundCount == 5 && `${player2.address} won against ${player1.address} in best of ` }</p>}
+                                    {player1.winning < player2.winning && <p className='mt-20 text-3xl'>{ roundCount == 10 && `${player2.address} won against ${player1.address} in best of ` }</p>}
                                 </div>
                         }
                     </div>

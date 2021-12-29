@@ -1,5 +1,6 @@
 import { useContext, useEffect } from 'react'
 import type { NextPage } from 'next'
+import { useRouter } from 'next/router'
 
 import {SocketContext} from '../../shared/context/socket';
 
@@ -17,6 +18,7 @@ import { RoundStatus } from '../../shared/models/round'
 import { RootModel } from '../../shared/models'
 
 export const GamePanel: NextPage = () => {
+  const router = useRouter()
   const socket = useContext(SocketContext);
 
   const { address, gameStatus, playerStatus, roundStatus } = useSelector((state: any) => ({
@@ -46,6 +48,17 @@ export const GamePanel: NextPage = () => {
 
     console.log("retry")
     socket.emit('retry')
+  }
+
+  function newRoom() {
+    console.log('newRoom')
+
+    router.push({
+      pathname: '/round',
+    })
+    
+    setGameStatus(GameStatus.WaitingPlayer)
+    setPlayerStatus(PlayerStatus.Piking)
   }
 
   const nextRound: Function = () => {
@@ -148,12 +161,13 @@ export const GamePanel: NextPage = () => {
         ) : gameStatus == GameStatus.GameOver ? (
           <>
             <p className='text-3xl text-center mt-40'>Game Over</p>
-            { (playerStatus == PlayerStatus.Win) && <p className='text-5xl text-center'>You are a Winer</p> }
+            { (playerStatus == PlayerStatus.Win) && <p className='text-5xl text-center'>You are a Winner</p> }
             { (playerStatus == PlayerStatus.Lose) && <p className='text-5xl text-center'>Failed</p> }
           </>
         ) : gameStatus == GameStatus.Retry ? (
           <div className='text-center'>
             <button onClick={ () => retry() } className='py-2 mt-20 mb-4 text-lg font-bold rounded-lg w-56 bg-black text-white border-solid border-2 hover:bg-slate-800'>Retry</button>
+            <button onClick={ () => newRoom() } className='py-2 mt-20 mb-4 text-lg font-bold rounded-lg w-56 bg-black text-white border-solid border-2 hover:bg-slate-800'>New Room</button>
           </div>
         ) : <></>}
     </>
