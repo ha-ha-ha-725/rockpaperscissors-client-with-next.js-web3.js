@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react'
+import { useState, useContext, useEffect } from 'react'
 import type { NextPage } from 'next'
 import { useRouter } from 'next/router'
 
@@ -21,11 +21,17 @@ export const GamePanel: NextPage = () => {
   const router = useRouter()
   const socket = useContext(SocketContext);
 
-  const { address, gameStatus, playerStatus, roundStatus } = useSelector((state: any) => ({
+  const { self, opponent } = useSelector((state: any) => ({
+      self: state.account.address,
+      opponent: state.account.opponent,
+  }))
+
+  const { address, gameStatus, playerStatus, roundStatus, roundCount } = useSelector((state: any) => ({
     address: state.account.address,
     gameStatus: state.game.status,
     playerStatus: state.account.status,
-    roundStatus: state.round.status
+    roundStatus: state.round.status,
+    roundCount: state.round.counts,
   }))
 
   const { setPlayerStatus, setOpponent, setRoundStatus, setGameStatus } = useRematchDispatch((dispatch: any) => ({
@@ -162,9 +168,9 @@ export const GamePanel: NextPage = () => {
         ) : gameStatus == GameStatus.GameOver ? (
           <>
             <p className='text-3xl text-center mt-40'>Game Over</p>
-            { (playerStatus == PlayerStatus.Win) && <p className='text-5xl text-center'>You are a Winner</p> }
-            { (playerStatus == PlayerStatus.Lose) && <p className='text-5xl text-center'>Failed</p> }
-            { (playerStatus == PlayerStatus.Tie) && <p className='text-5xl text-center'>Tie</p> }
+            { (playerStatus == PlayerStatus.Win) && <p className=' text-center'>{ self } won against {opponent} in best of {roundCount}</p> }
+            { (playerStatus == PlayerStatus.Lose) && <p className=' text-center'>{ self } defeated against {opponent} in best of {roundCount}</p> }
+            { (playerStatus == PlayerStatus.Tie) && <p className=' text-center'>{ opponent } and {self} are tied in best of {roundCount}</p> }
           </>
         ) : gameStatus == GameStatus.Retry ? (
           <div className='text-center'>

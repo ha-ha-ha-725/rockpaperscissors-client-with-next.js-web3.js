@@ -21,7 +21,8 @@ type RoundState = {
 
 export const round = createModel<RootModel>()({
     state: {
-        status: RoundStatus.None
+        status: RoundStatus.None,
+        counts: RoundNumbers.Three
     } as RoundState, // initial state
     reducers: {
         // handle state changes with pure functions
