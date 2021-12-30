@@ -103,6 +103,7 @@ export const GamePanel: NextPage = () => {
       setGameStatus(GameStatus.GameOver)
       if(type == 1) setPlayerStatus(PlayerStatus.Win)
       else if(type == -1) setPlayerStatus(PlayerStatus.Lose)
+      else setPlayerStatus(PlayerStatus.Tie)
 
       setTimeout(() => {
         setGameStatus(GameStatus.Retry)
@@ -163,6 +164,7 @@ export const GamePanel: NextPage = () => {
             <p className='text-3xl text-center mt-40'>Game Over</p>
             { (playerStatus == PlayerStatus.Win) && <p className='text-5xl text-center'>You are a Winner</p> }
             { (playerStatus == PlayerStatus.Lose) && <p className='text-5xl text-center'>Failed</p> }
+            { (playerStatus == PlayerStatus.Tie) && <p className='text-5xl text-center'>Tie</p> }
           </>
         ) : gameStatus == GameStatus.Retry ? (
           <div className='text-center'>

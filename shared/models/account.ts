@@ -10,6 +10,7 @@ export enum PlayerStatus {
     Disconnected,
     Win,
     Lose,
+    Tie
 }
 
 type AccountState = {
